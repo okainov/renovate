@@ -76,7 +76,7 @@ function handleGotError(
     logger.debug({ path }, 'Endpoint needs paid GitHub plan');
     throw err;
   }
-  if (err.statusCode === 403 && message.includes('rate limit exceeded')) {
+  if (err.statusCode === 403 && (message.includes('rate limit exceeded') || message.includes('exceeded a secondary rate limit'))) {
     logger.debug({ err }, 'GitHub failure: rate limit');
     throw new Error(PLATFORM_RATE_LIMIT_EXCEEDED);
   }
